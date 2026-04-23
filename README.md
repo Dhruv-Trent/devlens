@@ -1,36 +1,29 @@
 # DevLens
 
-DevLens is an AI-powered web application that helps developers understand, analyze, and improve codebases.
+DevLens is an AI-powered web application that helps developers understand and improve codebases.
 
----
+## Tech Stack
 
-## 🚀 Tech Stack
+* Frontend: Next.js + TypeScript + Tailwind CSS
+* Backend: FastAPI + Python
+* Database: PostgreSQL
+* Containers: Docker + Docker Compose
 
-* **Frontend:** Next.js + TypeScript + Tailwind CSS
-* **Backend:** FastAPI + Python
-* **Database:** PostgreSQL
-* **ORM & Migrations:** SQLAlchemy + Alembic
-* **Auth:** JWT (JSON Web Tokens)
-* **Containers:** Docker + Docker Compose
+## Day 1 Setup Complete
 
----
+Current progress:
 
-## 📦 Features Implemented (Day 1–3)
+* Frontend initialized
+* Backend initialized
+* PostgreSQL added
+* Docker Compose added
+* Health check endpoint working
 
-### ✅ Day 1 – Project Setup
+## Day 2 Database Setup
 
-* Next.js frontend initialized
-* FastAPI backend initialized
-* PostgreSQL with Docker
-* Docker Compose setup
-* Environment variables configured
-* `/health` endpoint working
-
-### ✅ Day 2 – Database Foundation
-
-* SQLAlchemy configured
 * PostgreSQL connected to backend
-* Alembic migrations setup
+* SQLAlchemy configured
+* Alembic migrations initialized
 * Models created:
 
   * Users
@@ -38,48 +31,33 @@ DevLens is an AI-powered web application that helps developers understand, analy
   * Scan Runs
 * Initial migration generated and applied
 
-### ✅ Day 3 – Authentication System
+## Day 3 Authentication System
 
-* User registration (`POST /auth/register`)
-* User login (`POST /auth/login`)
-* Password hashing with bcrypt
+* User registration endpoint (`POST /auth/register`)
+* User login endpoint (`POST /auth/login`)
+* Password hashing using bcrypt
 * JWT token generation
-* Protected routes implemented
-* Get current user (`GET /auth/me`)
+* Protected route implemented
+* Current user endpoint (`GET /auth/me`)
 
----
-
-## 🛠️ How to Run the Project
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/your-username/devlens.git
-cd devlens
-```
-
-### 2. Start all services
+## Run the project
 
 ```bash
 docker compose up --build
 ```
 
----
+## URLs
 
-## 🌐 Available Services
+* Frontend: http://localhost:3000
+* Backend: http://localhost:8000
+* API Docs: http://localhost:8000/docs
+* Health check: http://localhost:8000/health
 
-* Frontend → http://localhost:3000
-* Backend → http://localhost:8000
-* API Docs (Swagger) → http://localhost:8000/docs
-* Health Check → http://localhost:8000/health
-
----
-
-## 🧪 Testing Authentication
+## Test Authentication
 
 ### Register
 
-`POST /auth/register`
+POST `/auth/register`
 
 ```json
 {
@@ -91,9 +69,9 @@ docker compose up --build
 
 ### Login
 
-`POST /auth/login`
+POST `/auth/login`
 
-Returns:
+Response:
 
 ```json
 {
@@ -102,9 +80,9 @@ Returns:
 }
 ```
 
-### Protected Route
+### Get Current User
 
-`GET /auth/me`
+GET `/auth/me`
 
 Header:
 
@@ -112,56 +90,14 @@ Header:
 Authorization: Bearer <your_token>
 ```
 
----
+## Current Status
 
-## 📁 Project Structure
+* Backend working with authentication
+* Database connected with migrations
+* Docker setup running all services
 
-```
-devlens/
-  backend/
-    app/
-      api/routes/
-      core/
-      models/
-      schemas/
-      services/
-      main.py
-    alembic/
-  frontend/
-    app/
-    public/
-  docker-compose.yml
-  README.md
-```
+## Next Steps
 
----
-
-## 📌 Current Status
-
-✔ Backend fully functional with authentication
-✔ Database connected with migrations
-✔ Dockerized development environment
-
----
-
-## 🔜 Next Steps
-
-* Day 4: Frontend authentication (login/register UI)
-* Dashboard UI
-* File upload + code analysis pipeline
-
----
-
-## 🧠 Vision
-
-DevLens aims to become an AI-powered developer tool that:
-
-* Analyzes codebases
-* Detects issues and inefficiencies
-* Provides actionable insights
-
----
-
-## 📜 License
-
-This project is for learning and development purposes.
+* Frontend authentication (login/register UI)
+* Dashboard implementation
+* File upload and analysis features
