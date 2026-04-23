@@ -11,8 +11,6 @@ DevLens is an AI-powered web application that helps developers understand and im
 
 ## Day 1 Setup Complete
 
-Current progress:
-
 * Frontend initialized
 * Backend initialized
 * PostgreSQL added
@@ -40,64 +38,80 @@ Current progress:
 * Protected route implemented
 * Current user endpoint (`GET /auth/me`)
 
+## Day 4 Frontend Authentication
+
+* Login page implemented
+* Register page implemented
+* Form validation added (client-side)
+* API integration with backend authentication
+* Token storage implemented
+* Redirect after login working
+* Redirect guard for authenticated users (prevent access to login/register)
+
 ## Run the project
 
 ```bash
 docker compose up --build
 ```
 
-## URLs
+## Running servers
 
-* Frontend: http://localhost:3000
-* Backend: http://localhost:8000
-* API Docs: http://localhost:8000/docs
-* Health check: http://localhost:8000/health
-
-## Test Authentication
-
-### Register
-
-POST `/auth/register`
-
-```json
-{
-  "name": "Test User",
-  "email": "test@example.com",
-  "password": "password123"
-}
-```
-
-### Login
-
-POST `/auth/login`
-
-Response:
-
-```json
-{
-  "access_token": "your_token_here",
-  "token_type": "bearer"
-}
-```
-
-### Get Current User
-
-GET `/auth/me`
-
-Header:
+### Frontend
+Home:
 
 ```
-Authorization: Bearer <your_token>
+http://localhost:3000/
 ```
 
-## Current Status
+Dashboard:
+```
+http://localhost:3000/dashboard
+```
 
-* Backend working with authentication
-* Database connected with migrations
-* Docker setup running all services
+Login Page:
+```
+http://localhost:3000/login
+```
 
-## Next Steps
+Register Page:
+```
+http://localhost:3000/register
+```
 
-* Frontend authentication (login/register UI)
-* Dashboard implementation
-* File upload and analysis features
+---
+
+### Backend
+
+Base URL:
+```
+http://localhost:8000/
+```
+
+Health Check:
+```
+http://localhost:8000/health
+```
+
+API Docs (Swagger):
+```
+http://localhost:8000/docs
+```
+
+---
+
+### Auth Endpoints
+
+Register:
+```
+POST http://localhost:8000/auth/register
+```
+
+Login:
+```
+POST http://localhost:8000/auth/login
+```
+
+Get Current User:
+```
+GET http://localhost:8000/auth/me
+```
