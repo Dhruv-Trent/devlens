@@ -2,7 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { apiFetch } from "@/lib/api";
 import { getToken, removeToken } from "@/lib/auth";
+import type { Project } from "@/types/project";
+import CreateProjectForm from "@/components/project/CreateProjectForm";
+import ProjectCard from "@/components/project/ProjectCard";
 
 type User = {
   id: number;
@@ -12,7 +16,10 @@ type User = {
 
 export default function DashboardPage() {
   const router = useRouter();
+
   const [user, setUser] = useState<User | null>(null);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = getToken();
@@ -22,32 +29,22 @@ export default function DashboardPage() {
       return;
     }
 
-    async function fetchMe() {
+    async function loadDashboard() {
       try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/auth/me`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const me = await apiFetch("/auth/me", { auth: true });
+        const projectList = await apiFetch("/projects", { auth: true });
 
-        if (!res.ok) {
-          removeToken();
-          router.push("/login");
-          return;
-        }
-
-        const data = await res.json();
-        setUser(data);
+        setUser(me);
+        setProjects(projectList);
       } catch {
         removeToken();
         router.push("/login");
+      } finally {
+        setLoading(false);
       }
     }
 
-    fetchMe();
+    loadDashboard();
   }, [router]);
 
   function handleLogout() {
@@ -55,23 +52,50 @@ export default function DashboardPage() {
     router.push("/login");
   }
 
-  if (!user) {
+  function handleProjectCreated(project: Project) {
+    setProjects((prev) => [project, ...prev]);
+  }
+
+  if (loading) {
     return <main className="p-6">Loading dashboard...</main>;
   }
 
   return (
     <main className="min-h-screen p-6">
-      <div className="max-w-4xl mx-auto space-y-4">
-        <h1 className="text-3xl font-bold">Dashboard</h1>
-        <p>Welcome, {user.name}</p>
-        <p>Email: {user.email}</p>
+      <div className="mx-auto max-w-5xl space-y-8">
+        <header className="flex items-center justify-between border-b pb-4">
+          <div>
+            <h1 className="text-3xl font-bold">DevLens Dashboard</h1>
+            <p className="text-gray-600">
+              Welcome, {user?.name}
+            </p>
+          </div>
 
-        <button
-          onClick={handleLogout}
-          className="rounded bg-red-600 text-white px-4 py-2"
-        >
-          Logout
-        </button>
+          <button
+            onClick={handleLogout}
+            className="rounded bg-red-600 px-4 py-2 text-white"
+          >
+            Logout
+          </button>
+        </header>
+
+        <CreateProjectForm onProjectCreated={handleProjectCreated} />
+
+        <section className="space-y-3">
+          <h2 className="text-xl font-semibold">Your Projects</h2>
+
+          {projects.length === 0 ? (
+            <p className="rounded border p-4 text-gray-600">
+              No projects yet. Create your first DevLens project above.
+            </p>
+          ) : (
+            <div className="grid gap-4 md:grid-cols-2">
+              {projects.map((project) => (
+                <ProjectCard key={project.projects_id} project={project} />
+              ))}
+            </div>
+          )}
+        </section>
       </div>
     </main>
   );

@@ -1,8 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI 
 from sqlalchemy import text
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.database import SessionLocal
 from app.api.routes.auth import router as auth_router
+from app.api.routes.projects import router as projects_router
 
 app = FastAPI(title="DevLens API")
 
@@ -17,6 +18,7 @@ app.add_middleware(
 )
 
 app.include_router(auth_router)
+app.include_router(projects_router)
 
 @app.get("/")
 def read_root():
