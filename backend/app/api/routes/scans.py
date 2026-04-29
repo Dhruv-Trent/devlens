@@ -6,10 +6,11 @@ from app.models.user import User
 from app.models.scan_run import ScanRun
 from app.api.routes.auth import get_current_user
 from app.services.project_service import get_project_by_id
+from app.schemas.scan import ScanRunResponse
 
 router = APIRouter(tags=["scans"])
 
-@router.get("/projects/{project_id}/scans")
+@router.get("/projects/{project_id}/scans", response_model=list[ScanRunResponse])
 def list_project_scans(
     project_id: int,
     db: Session = Depends(get_db),
@@ -30,7 +31,7 @@ def list_project_scans(
         .all()
     )
 
-@router.get("/scans/{scan_id}")
+@router.get("/scans/{scan_id}", response_model=ScanRunResponse)
 def get_scan(
     scan_id: int,
     db: Session = Depends(get_db),

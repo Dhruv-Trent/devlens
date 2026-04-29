@@ -103,6 +103,10 @@ export default function RepositoryUpload({ projectId }: Props) {
           <p>Status: {scan.status}</p>
         </div>
       )}
+      <p className="text-xs text-gray-500">
+        Scan started. Refresh this page or check scan history later to see
+        updated status.
+      </p>
     </section>
   );
 }

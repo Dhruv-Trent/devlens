@@ -7,6 +7,7 @@ import { apiFetch } from "@/lib/api";
 import { getToken, removeToken } from "@/lib/auth";
 import type { Project } from "@/types/project";
 import RepositoryUpload from "@/components/project/RepositoryUpload";
+import ScanList from "@/components/project/ScanList";
 
 export default function ProjectDetailPage() {
   const router = useRouter();
@@ -59,6 +60,7 @@ export default function ProjectDetailPage() {
     <main className="min-h-screen p-6">
       <div className="mx-auto max-w-5xl space-y-6">
         <RepositoryUpload projectId={projectId} />
+        <ScanList projectId={projectId} />
         <header className="flex items-center justify-between border-b pb-4">
           <div>
             <Link href="/dashboard" className="text-sm text-blue-600">
