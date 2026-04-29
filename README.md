@@ -48,6 +48,31 @@ DevLens is an AI-powered web application that helps developers understand and im
 * Redirect after login working
 * Redirect guard for authenticated users (prevent access to login/register)
 
+## Day 5 Project Management
+
+* Project creation endpoint (`POST /projects`)
+* Get all user projects (`GET /projects`)
+* Get single project (`GET /projects/{project_id}`)
+* Project ownership validation implemented
+* Database relationship between users and projects established
+* Frontend dashboard created
+* Project list displayed on dashboard
+* Create project UI implemented
+* Navigation between dashboard and project detail page
+
+## Day 6 Repository Upload System
+
+* Upload repository endpoint (`POST /projects/{project_id}/upload`)
+* `.zip` file validation implemented
+* File size limit enforced (50 MB)
+* Uploaded files stored on disk (`backend/uploads`)
+* Scan run record created in database
+* Upload tied to project ownership (auth protected)
+* Frontend upload component implemented
+* Upload UI added to project detail page
+* Success and error handling in UI
+* Invalid file types rejected (frontend + backend validation)
+
 ## Run the project
 
 ```bash
