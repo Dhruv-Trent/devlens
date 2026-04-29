@@ -6,6 +6,7 @@ import Link from "next/link";
 import { apiFetch } from "@/lib/api";
 import { getToken, removeToken } from "@/lib/auth";
 import type { Project } from "@/types/project";
+import RepositoryUpload from "@/components/project/RepositoryUpload";
 
 export default function ProjectDetailPage() {
   const router = useRouter();
@@ -57,6 +58,7 @@ export default function ProjectDetailPage() {
   return (
     <main className="min-h-screen p-6">
       <div className="mx-auto max-w-5xl space-y-6">
+        <RepositoryUpload projectId={projectId} />
         <header className="flex items-center justify-between border-b pb-4">
           <div>
             <Link href="/dashboard" className="text-sm text-blue-600">
@@ -81,31 +83,25 @@ export default function ProjectDetailPage() {
         <section className="grid gap-4 md:grid-cols-3">
           <div className="rounded border p-4">
             <h2 className="font-semibold">Files</h2>
-            <p className="text-sm text-gray-500">
-              Coming soon on Day 8
-            </p>
+            <p className="text-sm text-gray-500">Coming soon on Day 8</p>
           </div>
 
           <div className="rounded border p-4">
             <h2 className="font-semibold">Findings</h2>
-            <p className="text-sm text-gray-500">
-              Coming soon on Day 13
-            </p>
+            <p className="text-sm text-gray-500">Coming soon on Day 13</p>
           </div>
 
           <div className="rounded border p-4">
             <h2 className="font-semibold">Chat</h2>
-            <p className="text-sm text-gray-500">
-              Coming soon on Day 15
-            </p>
+            <p className="text-sm text-gray-500">Coming soon on Day 15</p>
           </div>
         </section>
 
         <section className="rounded border p-4">
           <h2 className="text-xl font-semibold">Project Workspace</h2>
           <p className="mt-2 text-gray-600">
-            This page will later contain repository upload, scan history,
-            file explorer, findings, and AI chat.
+            This page will later contain repository upload, scan history, file
+            explorer, findings, and AI chat.
           </p>
         </section>
       </div>

@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.database import SessionLocal
 from app.api.routes.auth import router as auth_router
 from app.api.routes.projects import router as projects_router
+from app.api.routes.uploads import router as uploads_router
 
 app = FastAPI(title="DevLens API")
 
@@ -19,6 +20,7 @@ app.add_middleware(
 
 app.include_router(auth_router)
 app.include_router(projects_router)
+app.include_router(uploads_router)
 
 @app.get("/")
 def read_root():
