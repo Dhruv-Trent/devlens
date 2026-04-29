@@ -25,6 +25,6 @@ def get_user_projects(db: Session, user_id: int):
 def get_project_by_id(db: Session, project_id: int, user_id: int):
     return (
         db.query(Project)
-        .filter(Project.projects_id == project_id, Project.user_id == user_id)
+        .filter(Project.project_id == project_id, Project.user_id == user_id)
         .first()
     )

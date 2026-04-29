@@ -7,7 +7,7 @@ class ScanRun(Base):
     __tablename__ = "devlens_users_scan_runs"
 
     scan_runs_id = Column(Integer, primary_key=True, index=True)
-    project_id = Column(Integer, ForeignKey("devlens_users_projects.projects_id"), nullable=False)
+    project_id = Column(Integer, ForeignKey("devlens_users_projects.project_id"), nullable=False)
    
     status = Column(String, nullable=False, default="pending")
 
