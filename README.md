@@ -9,6 +9,8 @@ DevLens is an AI-powered web application that helps developers understand and im
 * Database: PostgreSQL
 * Containers: Docker + Docker Compose
 
+---
+
 ## Day 1 Setup Complete
 
 * Frontend initialized
@@ -16,6 +18,8 @@ DevLens is an AI-powered web application that helps developers understand and im
 * PostgreSQL added
 * Docker Compose added
 * Health check endpoint working
+
+---
 
 ## Day 2 Database Setup
 
@@ -29,6 +33,8 @@ DevLens is an AI-powered web application that helps developers understand and im
   * Scan Runs
 * Initial migration generated and applied
 
+---
+
 ## Day 3 Authentication System
 
 * User registration endpoint (`POST /auth/register`)
@@ -38,6 +44,8 @@ DevLens is an AI-powered web application that helps developers understand and im
 * Protected route implemented
 * Current user endpoint (`GET /auth/me`)
 
+---
+
 ## Day 4 Frontend Authentication
 
 * Login page implemented
@@ -46,7 +54,9 @@ DevLens is an AI-powered web application that helps developers understand and im
 * API integration with backend authentication
 * Token storage implemented
 * Redirect after login working
-* Redirect guard for authenticated users (prevent access to login/register)
+* Redirect guard for authenticated users
+
+---
 
 ## Day 5 Project Management
 
@@ -60,6 +70,8 @@ DevLens is an AI-powered web application that helps developers understand and im
 * Create project UI implemented
 * Navigation between dashboard and project detail page
 
+---
+
 ## Day 6 Repository Upload System
 
 * Upload repository endpoint (`POST /projects/{project_id}/upload`)
@@ -72,6 +84,41 @@ DevLens is an AI-powered web application that helps developers understand and im
 * Upload UI added to project detail page
 * Success and error handling in UI
 * Invalid file types rejected (frontend + backend validation)
+
+---
+
+## Day 7 Repository Extraction & Scan Orchestration
+
+* Background scan process implemented using FastAPI BackgroundTasks
+* Scan lifecycle implemented:
+
+  * `pending → processing → completed / failed`
+* Safe `.zip` extraction implemented (prevents path traversal attacks)
+* Extracted repositories stored in:
+
+  * `backend/extracted_repos/`
+* Existing extracted folders cleaned before re-scan
+* Ignored folders during scan:
+
+  * `.git`, `node_modules`, `.next`, `dist`, `build`, `venv`, `__pycache__`, etc.
+* Recursive repository traversal implemented
+* Total file count calculation added
+* Scan metadata updated in database:
+
+  * `extracted_path`
+  * `total_files`
+  * `started_at`
+  * `completed_at`
+  * `error_message`
+* Error handling added for corrupted or invalid zip files
+* Scan endpoints implemented:
+
+  * `GET /projects/{project_id}/scans`
+  * `GET /scans/{scan_id}`
+* Optional frontend scan list component added
+* Upload now automatically triggers scan process
+
+---
 
 ## Run the project
 
