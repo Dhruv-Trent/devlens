@@ -6,6 +6,8 @@ from sqlalchemy.orm import Session
 
 from app.models.scan_run import ScanRun
 
+from app.services.file_service import save_repository_files
+
 from app.core.database import SessionLocal
 
 EXTRACT_DIR = "extracted_repos"
@@ -86,8 +88,17 @@ def run_scan(scan_id: int):
 
             total_files = count_repository_files(extract_path)
 
+            file_result = save_repository_files(
+                db=db,
+                project_id=scan.project_id,
+                scan_run_id=scan.scan_runs_id,
+                extracted_path=extract_path,
+                ignored_dirs=IGNORED_DIRS,
+            )
+
             scan.extracted_path = extract_path
             scan.total_files = total_files
+            scan.supported_files = file_result["supported_files"]
             scan.status = "completed"
             scan.completed_at = datetime.now(timezone.utc)
             db.commit()

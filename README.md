@@ -120,6 +120,39 @@ DevLens is an AI-powered web application that helps developers understand and im
 
 ---
 
+## Day 8 File Metadata Storage & Repository Tree
+
+* File model created and connected to projects + scan runs
+* `files` table added through Alembic migration
+* Repository file metadata stored in database after scan
+* Supported file type detection implemented
+* Language inference added from file extensions
+* File metadata stored:
+
+  * `path`
+  * `filename`
+  * `extension`
+  * `language`
+  * `size_bytes`
+  * `content_preview`
+  * `is_supported`
+* Unsupported files skipped or marked
+* Repository file previews saved for supported files
+* File processing integrated into scan pipeline
+* Recursive repository tree builder implemented
+* Tree sorting implemented (folders first, files second)
+* File tree API endpoint implemented:
+
+  * `GET /projects/{project_id}/files/tree`
+* Frontend repository tree component created
+* Expand/collapse folder UI implemented
+* Repository tree integrated into project detail page
+* Clickable file nodes added for future file viewer support
+* Cross-platform path normalization added (`/` separator handling)
+* Supported file counts now tracked per scan
+
+---
+
 ## Run the project
 
 ```bash
