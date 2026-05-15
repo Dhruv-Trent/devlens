@@ -6,9 +6,19 @@ import type { TreeNode } from "@/types/file";
 
 type Props = {
   projectId: string;
+  selectedFileId?: number | null;
+  onFileSelect: (fileId: number) => void;
 };
 
-function TreeItem({ node }: { node: TreeNode }) {
+function TreeItem({
+  node,
+  selectedFileId,
+  onFileSelect,
+}: {
+  node: TreeNode;
+  selectedFileId?: number | null;
+  onFileSelect: (fileId: number) => void;
+}) {
   const [open, setOpen] = useState(true);
 
   if (node.type === "folder") {
@@ -25,7 +35,12 @@ function TreeItem({ node }: { node: TreeNode }) {
         {open && (
           <div className="ml-4 border-l pl-2">
             {node.children.map((child) => (
-              <TreeItem key={child.path} node={child} />
+              <TreeItem
+                key={child.path}
+                node={child}
+                selectedFileId={selectedFileId}
+                onFileSelect={onFileSelect}
+              />
             ))}
           </div>
         )}
@@ -33,17 +48,31 @@ function TreeItem({ node }: { node: TreeNode }) {
     );
   }
 
+  const isSelected = selectedFileId === node.file_id;
+
   return (
     <button
-      className="ml-2 block text-left text-sm text-gray-700 hover:text-black"
-      onClick={() => console.log("Clicked file:", node.file_id)}
+      className={`ml-2 block w-full rounded px-2 py-1 text-left text-sm ${
+        isSelected
+          ? "bg-black text-white"
+          : "text-gray-700 hover:bg-gray-100 hover:text-black"
+      }`}
+      onClick={() => {
+        if (node.file_id) {
+          onFileSelect(node.file_id);
+        }
+      }}
     >
       📄 {node.name}
     </button>
   );
 }
 
-export default function RepositoryTree({ projectId }: Props) {
+export default function RepositoryTree({
+  projectId,
+  selectedFileId,
+  onFileSelect,
+}: Props) {
   const [tree, setTree] = useState<TreeNode | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -86,9 +115,14 @@ export default function RepositoryTree({ projectId }: Props) {
     <section className="rounded border p-4">
       <h2 className="mb-3 text-xl font-semibold">Repository Files</h2>
 
-      <div className="max-h-[500px] overflow-auto rounded bg-gray-50 p-3">
+      <div className="max-h-[600px] overflow-auto rounded bg-gray-50 p-3">
         {tree.children.map((child) => (
-          <TreeItem key={child.path} node={child} />
+          <TreeItem
+            key={child.path}
+            node={child}
+            selectedFileId={selectedFileId}
+            onFileSelect={onFileSelect}
+          />
         ))}
       </div>
     </section>

@@ -9,6 +9,8 @@ import type { Project } from "@/types/project";
 import RepositoryUpload from "@/components/project/RepositoryUpload";
 import ScanList from "@/components/project/ScanList";
 import RepositoryTree from "@/components/project/RepositoryTree";
+import FileViewer from "@/components/project/FileViewer";
+import type { FileDetail } from "@/types/file";
 
 export default function ProjectDetailPage() {
   const router = useRouter();
@@ -18,6 +20,27 @@ export default function ProjectDetailPage() {
 
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const [selectedFileId, setSelectedFileId] = useState<number | null>(null);
+  const [selectedFile, setSelectedFile] = useState<FileDetail | null>(null);
+  const [fileLoading, setFileLoading] = useState(false);
+
+  async function handleFileSelect(fileId: number) {
+    setSelectedFileId(fileId);
+    setFileLoading(true);
+
+    try {
+      const data = await apiFetch(`/files/${fileId}`, {
+        auth: true,
+      });
+
+      setSelectedFile(data);
+    } catch {
+      setSelectedFile(null);
+    } finally {
+      setFileLoading(false);
+    }
+  }
 
   useEffect(() => {
     const token = getToken();
@@ -60,9 +83,6 @@ export default function ProjectDetailPage() {
   return (
     <main className="min-h-screen p-6">
       <div className="mx-auto max-w-5xl space-y-6">
-        <RepositoryUpload projectId={projectId} />
-        <ScanList projectId={projectId} />
-        <RepositoryTree projectId={projectId} />
         <header className="flex items-center justify-between border-b pb-4">
           <div>
             <Link href="/dashboard" className="text-sm text-blue-600">
@@ -83,6 +103,17 @@ export default function ProjectDetailPage() {
             Logout
           </button>
         </header>
+        <RepositoryUpload projectId={projectId} />
+        <ScanList projectId={projectId} />
+        <div className="grid gap-4 lg:grid-cols-[320px_1fr]">
+          <RepositoryTree
+            projectId={projectId}
+            selectedFileId={selectedFileId}
+            onFileSelect={handleFileSelect}
+          />
+
+          <FileViewer file={selectedFile} loading={fileLoading} />
+        </div>
 
         <section className="grid gap-4 md:grid-cols-3">
           <div className="rounded border p-4">

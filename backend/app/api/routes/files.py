@@ -9,6 +9,8 @@ from app.api.routes.auth import get_current_user
 from app.services.project_service import get_project_by_id
 from app.utils.tree_utils import build_file_tree
 
+from app.schemas.file import FileResponse
+
 router = APIRouter(tags=["files"])
 
 @router.get("/projects/{project_id}/files/tree")
@@ -55,3 +57,27 @@ def get_project_file_tree(
     )
 
     return build_file_tree(files)
+
+@router.get("/files/{file_id}", response_model=FileResponse)
+def get_file_detail(
+    file_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    file = db.query(File).filter(File.id == file_id).first()
+
+    if not file:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="File not found"
+        )
+
+    project = get_project_by_id(db, file.project_id, current_user.user_id)
+
+    if not project:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="File not found"
+        )
+
+    return file
