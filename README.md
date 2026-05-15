@@ -153,6 +153,63 @@ DevLens is an AI-powered web application that helps developers understand and im
 
 ---
 
+## Day 9 File Viewer & File Detail API
+
+* File detail API endpoint implemented:
+
+  * `GET /files/{file_id}`
+* File ownership validation added for secure file access
+* File detail loading connected to frontend
+* File viewer component created
+* Repository tree file selection implemented
+* Selected file highlighting added in repository tree
+* File viewer displays:
+
+  * filename
+  * full file path
+  * detected language
+  * extension
+  * file size
+  * supported file status
+* Safe code/content preview rendering implemented
+* Summary placeholder added for future AI summaries
+* Two-column project workspace layout added:
+
+  * repository tree
+  * file viewer panel
+* Loading and empty states implemented for file viewer
+* Cross-user file access protection verified
+* Repository browsing workflow improved for uploaded scans
+
+---
+
+## Day 10 File Chunking System
+
+* `FileChunk` model created
+* `file_chunks` table added through Alembic migration
+* Chunking service implemented
+* Supported files automatically split into chunks after scan
+* Chunk overlap strategy implemented for better future retrieval quality
+* Line-aware chunk splitting added to preserve cleaner code boundaries
+* Chunk metadata stored:
+
+  * `file_id`
+  * `chunk_index`
+  * `content`
+  * `token_count_estimate`
+* Chunk ordering preserved for reconstruction and retrieval
+* Automatic chunk generation integrated into scan pipeline
+* Existing chunks cleared before re-processing scans
+* `chunk_count` tracking added to scan runs
+* Chunk estimation logic added for future embedding support
+* File chunk API endpoint implemented:
+
+  * `GET /files/{file_id}/chunks`
+* Database verification and chunk retrieval testing completed
+* Foundation prepared for Day 11 embeddings integration
+
+---
+
 ## Run the project
 
 ```bash
