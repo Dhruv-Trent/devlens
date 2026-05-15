@@ -10,6 +10,8 @@ from app.services.file_service import save_repository_files
 
 from app.core.database import SessionLocal
 
+from app.services.chunk_service import create_chunks_for_scan
+
 EXTRACT_DIR = "extracted_repos"
 
 IGNORED_DIRS = {
@@ -95,10 +97,11 @@ def run_scan(scan_id: int):
                 extracted_path=extract_path,
                 ignored_dirs=IGNORED_DIRS,
             )
-
+            chunk_count = create_chunks_for_scan(db, scan.scan_runs_id)
             scan.extracted_path = extract_path
             scan.total_files = total_files
             scan.supported_files = file_result["supported_files"]
+            scan.chunk_count = chunk_count
             scan.status = "completed"
             scan.completed_at = datetime.now(timezone.utc)
             db.commit()

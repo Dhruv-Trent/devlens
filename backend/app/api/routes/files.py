@@ -8,6 +8,8 @@ from app.models.scan_run import ScanRun
 from app.api.routes.auth import get_current_user
 from app.services.project_service import get_project_by_id
 from app.utils.tree_utils import build_file_tree
+from app.models.file_chunk import FileChunk
+from app.schemas.file_chunk import FileChunkResponse
 
 from app.schemas.file import FileResponse
 
@@ -81,3 +83,32 @@ def get_file_detail(
         )
 
     return file
+
+@router.get("/files/{file_id}/chunks", response_model=list[FileChunkResponse])
+def get_file_chunks(
+    file_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    file = db.query(File).filter(File.id == file_id).first()
+
+    if not file:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="File not found"
+        )
+
+    project = get_project_by_id(db, file.project_id, current_user.user_id)
+
+    if not project:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="File not found"
+        )
+
+    return (
+        db.query(FileChunk)
+        .filter(FileChunk.file_id == file_id)
+        .order_by(FileChunk.chunk_index.asc())
+        .all()
+    )
