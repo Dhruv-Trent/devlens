@@ -12,6 +12,7 @@ from app.models.file_chunk import FileChunk
 from app.schemas.file_chunk import FileChunkResponse
 
 from app.schemas.file import FileResponse
+from app.services.embedding_service import search_similar_chunks
 
 router = APIRouter(tags=["files"])
 
@@ -112,3 +113,39 @@ def get_file_chunks(
         .order_by(FileChunk.chunk_index.asc())
         .all()
     )
+    
+@router.get("/projects/{project_id}/search-chunks")
+def search_chunks(
+    project_id: int,
+    q: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    project = get_project_by_id(db, project_id, current_user.user_id)
+
+    if not project:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Project not found"
+        )
+
+    try:
+        chunks = search_similar_chunks(
+            db=db,
+            query=q,
+            project_id=project_id,
+            limit=5,
+    )
+    except Exception:
+        return []
+
+    return [
+        {
+            "chunk_id": chunk.id,
+            "file_id": chunk.file_id,
+            "chunk_index": chunk.chunk_index,
+            "content_preview": chunk.content[:500],
+            "token_count_estimate": chunk.token_count_estimate,
+        }
+        for chunk in chunks
+    ]

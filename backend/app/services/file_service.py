@@ -9,7 +9,9 @@ MAX_PREVIEW_CHARS = 8000
 def read_text_preview(file_path: str) -> str | None:
     try:
         with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
-            return f.read(MAX_PREVIEW_CHARS)
+            preview = f.read(MAX_PREVIEW_CHARS)
+
+        return preview.replace("\x00", "")
     except Exception:
         return None
 

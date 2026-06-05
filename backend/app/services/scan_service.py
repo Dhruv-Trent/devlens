@@ -11,6 +11,7 @@ from app.services.file_service import save_repository_files
 from app.core.database import SessionLocal
 
 from app.services.chunk_service import create_chunks_for_scan
+from app.services.embedding_service import generate_embeddings_for_scan
 
 EXTRACT_DIR = "extracted_repos"
 
@@ -98,6 +99,10 @@ def run_scan(scan_id: int):
                 ignored_dirs=IGNORED_DIRS,
             )
             chunk_count = create_chunks_for_scan(db, scan.scan_runs_id)
+            try:
+                generate_embeddings_for_scan(db, scan.scan_runs_id)
+            except Exception as embedding_error:
+                print(f"Embedding generation failed: {embedding_error}")
             scan.extracted_path = extract_path
             scan.total_files = total_files
             scan.supported_files = file_result["supported_files"]
@@ -107,9 +112,14 @@ def run_scan(scan_id: int):
             db.commit()
 
         except Exception as e:
-            scan.status = "failed"
-            scan.error_message = str(e)
-            scan.completed_at = datetime.now(timezone.utc)
-            db.commit()
+            db.rollback()
+
+            scan = db.query(ScanRun).filter(ScanRun.scan_runs_id == scan_id).first()
+
+            if scan:
+                scan.status = "failed"
+                scan.error_message = str(e)
+                scan.completed_at = datetime.now(timezone.utc)
+                db.commit()
     finally:
         db.close()

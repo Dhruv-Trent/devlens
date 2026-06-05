@@ -25,7 +25,7 @@ services:
       - db
 
   db:
-    image: postgres:15
+    image: ankane/pgvector
     container_name: devlens_db
     restart: always
     environment:
