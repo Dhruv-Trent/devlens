@@ -210,6 +210,28 @@ DevLens is an AI-powered web application that helps developers understand and im
 
 ---
 
+## Day 11 Embedding Infrastructure & Vector Search Foundation
+
+* pgvector database extension enabled
+* Vector support added to PostgreSQL
+* Embedding column added to file chunks
+* Embedding service implemented
+* OpenAI embedding integration configured
+* Vector search service implemented
+* Semantic chunk search endpoint added:
+
+  * `GET /projects/{project_id}/search-chunks`
+* Chunk similarity retrieval logic implemented
+* Scan pipeline integrated with embedding generation
+* Embedding failures no longer break repository scans
+* Search endpoint gracefully handles missing embeddings
+* Scan rollback and error recovery improved
+* File preview sanitization added for NUL-byte safety
+* Foundation prepared for semantic code search
+* Ready for future migration to local embedding models
+
+---
+
 ## Run the project
 
 ```bash
