@@ -232,6 +232,21 @@ DevLens is an AI-powered web application that helps developers understand and im
 
 ---
 
+## Day 12 AI File Summaries
+
+* Summary generation service implemented
+* File summaries stored in database
+* Summary generation integrated into scan pipeline
+* File viewer updated to display summaries
+* Summary persistence added through `files.summary`
+* Scan process continues even if summary generation fails
+* Error handling added for AI service failures
+* Summary panel integrated into DevLens workspace
+* Foundation prepared for AI-powered code understanding
+* Ready for future migration to local LLM summarization
+
+---
+
 ## Run the project
 
 ```bash

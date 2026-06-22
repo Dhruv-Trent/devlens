@@ -63,8 +63,9 @@ export default function FileViewer({ file, loading = false }: Props) {
 
       <div className="rounded bg-gray-50 p-4">
         <h3 className="mb-2 font-semibold">Summary</h3>
-        <p className="text-sm text-gray-600">
-          {file.summary || "AI summary will be generated on Day 12."}
+        <p className="text-sm text-gray-600 whitespace-pre-line">
+          {file.summary ||
+            "No summary available yet. Upload and scan the repository again."}
         </p>
       </div>
 
