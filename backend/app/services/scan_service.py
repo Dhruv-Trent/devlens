@@ -13,6 +13,7 @@ from app.core.database import SessionLocal
 from app.services.chunk_service import create_chunks_for_scan
 from app.services.embedding_service import generate_embeddings_for_scan
 from app.services.summary_service import generate_summaries_for_scan
+from app.services.finding_service import generate_findings_for_scan
 
 EXTRACT_DIR = "extracted_repos"
 
@@ -107,10 +108,14 @@ def run_scan(scan_id: int):
                 print(f"Embedding generation failed: {embedding_error}")
                 
             generate_summaries_for_scan(db, scan.scan_runs_id)
+            
+            issue_count = generate_findings_for_scan(db, scan.scan_runs_id)
+            
             scan.extracted_path = extract_path
             scan.total_files = total_files
             scan.supported_files = file_result["supported_files"]
             scan.chunk_count = chunk_count
+            scan.issue_count = issue_count
             scan.status = "completed"
             scan.completed_at = datetime.now(timezone.utc)
             db.commit()

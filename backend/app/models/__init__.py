@@ -3,3 +3,4 @@ from app.models.project import Project
 from app.models.scan_run import ScanRun
 from app.models.file import File
 from app.models.file_chunk import FileChunk
+from app.models.issue import Issue

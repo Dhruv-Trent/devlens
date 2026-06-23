@@ -11,6 +11,7 @@ import ScanList from "@/components/project/ScanList";
 import RepositoryTree from "@/components/project/RepositoryTree";
 import FileViewer from "@/components/project/FileViewer";
 import type { FileDetail } from "@/types/file";
+import FindingsPanel from "@/components/project/FindingsPanel";
 
 export default function ProjectDetailPage() {
   const router = useRouter();
@@ -105,6 +106,7 @@ export default function ProjectDetailPage() {
         </header>
         <RepositoryUpload projectId={projectId} />
         <ScanList projectId={projectId} />
+        <FindingsPanel projectId={projectId} />
         <div className="grid gap-4 lg:grid-cols-[320px_1fr]">
           <RepositoryTree
             projectId={projectId}
