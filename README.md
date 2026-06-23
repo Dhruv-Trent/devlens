@@ -247,6 +247,63 @@ DevLens is an AI-powered web application that helps developers understand and im
 
 ---
 
+---
+
+## Day 13 Automated Findings Engine
+
+* Issues model created
+* `issues` table added through Alembic migration
+* Issue schema implemented
+* Findings generation service created
+* Automated repository analysis added during scan process
+* TODO/FIXME/HACK/XXX comment detection implemented
+* Hardcoded secret detection implemented
+
+  * API_KEY
+  * SECRET
+  * PASSWORD
+  * TOKEN
+  * Private key markers
+* Risky code pattern detection implemented
+
+  * eval()
+  * exec()
+  * pickle.loads
+  * innerHTML usage
+* Large file detection implemented
+
+  * Low severity: 300+ lines
+  * Medium severity: 500+ lines
+  * High severity: 800+ lines
+* Missing test detection implemented
+* Issue severity levels added
+
+  * low
+  * medium
+  * high
+* Findings linked to:
+
+  * Project
+  * Scan Run
+  * File
+* Scan pipeline updated to generate findings automatically after summaries
+* Findings count tracked per scan
+* Findings API endpoint implemented
+
+  * `GET /projects/{project_id}/issues`
+* Project ownership validation added to findings endpoint
+* Latest completed scan findings retrieval implemented
+* Frontend issue type created
+* Findings panel component created
+* Findings API integration added
+* Severity badge UI implemented
+* Issue suggestions displayed in frontend
+* Line references displayed for findings
+* Findings integrated into project detail page
+* End-to-end testing completed using sample repositories
+
+---
+
 ## Run the project
 
 ```bash
