@@ -247,8 +247,6 @@ DevLens is an AI-powered web application that helps developers understand and im
 
 ---
 
----
-
 ## Day 13 Automated Findings Engine
 
 * Issues model created
