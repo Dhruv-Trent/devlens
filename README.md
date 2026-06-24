@@ -327,6 +327,30 @@ DevLens is an AI-powered web application that helps developers understand and im
 
 ---
 
+## Day 15 Repository Chat UI
+
+* Frontend chat message types created
+* Chat panel component implemented
+* Chat history loading added
+* User and assistant messages displayed in UI
+* Chat input form added
+* Send button and submit handling implemented
+* Starter prompts added:
+
+  * What does this project do?
+  * Where is authentication handled?
+  * Which files seem most important?
+  * What should I refactor first?
+* Loading state added while assistant response is pending
+* Error state added for failed chat requests
+* Auto-scroll behavior added for new messages
+* Chat panel integrated into project detail page
+* Backend chat history connected to frontend
+* Messages persist after page refresh
+* UI gracefully displays backend fallback responses when embeddings/API quota are unavailable
+
+---
+
 ## Run the project
 
 ```bash
