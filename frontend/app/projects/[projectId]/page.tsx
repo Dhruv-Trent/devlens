@@ -12,6 +12,7 @@ import RepositoryTree from "@/components/project/RepositoryTree";
 import FileViewer from "@/components/project/FileViewer";
 import type { FileDetail } from "@/types/file";
 import FindingsPanel from "@/components/project/FindingsPanel";
+import ChatPanel from "@/components/project/ChatPanel";
 
 export default function ProjectDetailPage() {
   const router = useRouter();
@@ -107,6 +108,7 @@ export default function ProjectDetailPage() {
         <RepositoryUpload projectId={projectId} />
         <ScanList projectId={projectId} />
         <FindingsPanel projectId={projectId} />
+
         <div className="grid gap-4 lg:grid-cols-[320px_1fr]">
           <RepositoryTree
             projectId={projectId}
@@ -116,6 +118,7 @@ export default function ProjectDetailPage() {
 
           <FileViewer file={selectedFile} loading={fileLoading} />
         </div>
+        <ChatPanel projectId={projectId} />
 
         <section className="grid gap-4 md:grid-cols-3">
           <div className="rounded border p-4">
