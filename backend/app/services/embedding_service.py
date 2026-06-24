@@ -46,17 +46,23 @@ def search_similar_chunks(
     query: str,
     project_id: int,
     limit: int = 5,
+    scan_run_id: int | None = None,
 ):
     query_embedding = generate_embedding(query)
 
-    results = (
+    query_obj = (
         db.query(FileChunk)
         .join(FileChunk.file)
         .filter(FileChunk.file.has(project_id=project_id))
         .filter(FileChunk.embedding.isnot(None))
+    )
+
+    if scan_run_id:
+        query_obj = query_obj.filter(FileChunk.file.has(scan_run_id=scan_run_id))
+
+    return (
+        query_obj
         .order_by(FileChunk.embedding.l2_distance(query_embedding))
         .limit(limit)
         .all()
     )
-
-    return results

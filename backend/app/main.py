@@ -8,6 +8,7 @@ from app.api.routes.uploads import router as uploads_router
 from app.api.routes.scans import router as scans_router
 from app.api.routes.files import router as files_router
 from app.api.routes.findings import router as findings_router
+from app.api.routes.chat import router as chat_router
 
 app = FastAPI(title="DevLens API")
 
@@ -27,6 +28,7 @@ app.include_router(uploads_router)
 app.include_router(scans_router)
 app.include_router(files_router)
 app.include_router(findings_router)
+app.include_router(chat_router)
 
 @app.get("/")
 def read_root():

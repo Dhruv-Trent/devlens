@@ -302,6 +302,31 @@ DevLens is an AI-powered web application that helps developers understand and im
 
 ---
 
+## Day 14 Repository Chat Backend
+
+* Chat message model created
+* `chat_messages` table added through Alembic migration
+* Chat schemas implemented
+* Chat service created
+* Chat history persistence added
+* User and assistant messages stored in database
+* Latest completed scan detection implemented
+* Repository question-answering backend created
+* Retrieval connection added using file chunks and vector search
+* Chat endpoint implemented:
+
+  * `POST /projects/{project_id}/chat`
+* Chat history endpoint implemented:
+
+  * `GET /projects/{project_id}/chat`
+* Project ownership validation added to chat endpoints
+* Empty message validation added
+* Chat backend safely handles unavailable embeddings or API quota errors
+* Chat responses saved even when retrieval is unavailable
+* Foundation prepared for full repository Q&A and Day 15 chat UI
+
+---
+
 ## Run the project
 
 ```bash
