@@ -6,9 +6,13 @@ import type { ScanRun } from "@/types/scan";
 
 type Props = {
   projectId: string;
+  onUploadComplete?: () => void;
 };
 
-export default function RepositoryUpload({ projectId }: Props) {
+export default function RepositoryUpload({
+  projectId,
+  onUploadComplete,
+}: Props) {
   const [file, setFile] = useState<File | null>(null);
   const [scan, setScan] = useState<ScanRun | null>(null);
   const [error, setError] = useState("");
@@ -61,6 +65,7 @@ export default function RepositoryUpload({ projectId }: Props) {
 
       setScan(data);
       setFile(null);
+      onUploadComplete?.();
     } catch (err: any) {
       setError(err.message || "Upload failed");
     } finally {
@@ -76,7 +81,7 @@ export default function RepositoryUpload({ projectId }: Props) {
           Upload a repository as a .zip file to start a scan.
         </p>
       </div>
-
+      
       <form onSubmit={handleUpload} className="space-y-3">
         <input
           type="file"
@@ -99,7 +104,7 @@ export default function RepositoryUpload({ projectId }: Props) {
       {scan && (
         <div className="rounded bg-gray-50 p-3 text-sm">
           <p className="font-medium">Upload successful</p>
-          <p>Scan ID: {scan.scan_runs_id}</p>
+          <p>Scan ID: {scan.id}</p>
           <p>Status: {scan.status}</p>
         </div>
       )}

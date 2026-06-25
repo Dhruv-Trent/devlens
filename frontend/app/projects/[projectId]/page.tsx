@@ -13,6 +13,8 @@ import FileViewer from "@/components/project/FileViewer";
 import type { FileDetail } from "@/types/file";
 import FindingsPanel from "@/components/project/FindingsPanel";
 import ChatPanel from "@/components/project/ChatPanel";
+import ProjectOverview from "@/components/project/ProjectOverview";
+import type { ScanRun } from "@/types/scan";
 
 export default function ProjectDetailPage() {
   const router = useRouter();
@@ -26,6 +28,11 @@ export default function ProjectDetailPage() {
   const [selectedFileId, setSelectedFileId] = useState<number | null>(null);
   const [selectedFile, setSelectedFile] = useState<FileDetail | null>(null);
   const [fileLoading, setFileLoading] = useState(false);
+
+  const [scans, setScans] = useState<ScanRun[]>([]);
+  const [scansLoading, setScansLoading] = useState(true);
+
+  const latestScan = scans.length > 0 ? scans[0] : null;
 
   async function handleFileSelect(fileId: number) {
     setSelectedFileId(fileId);
@@ -44,6 +51,20 @@ export default function ProjectDetailPage() {
     }
   }
 
+  async function loadScans() {
+    setScansLoading(true);
+
+    try {
+      const data = await apiFetch(`/projects/${projectId}/scans`, {
+        auth: true,
+      });
+
+      setScans(data);
+    } finally {
+      setScansLoading(false);
+    }
+  }
+
   useEffect(() => {
     const token = getToken();
 
@@ -59,6 +80,7 @@ export default function ProjectDetailPage() {
         });
 
         setProject(data);
+        await loadScans();
       } catch {
         router.push("/dashboard");
       } finally {
@@ -105,8 +127,20 @@ export default function ProjectDetailPage() {
             Logout
           </button>
         </header>
-        <RepositoryUpload projectId={projectId} />
-        <ScanList projectId={projectId} />
+        <ProjectOverview latestScan={latestScan} />
+
+        <div className="flex justify-end">
+          <button
+            onClick={loadScans}
+            className="rounded border px-3 py-1 text-sm"
+          >
+            Refresh scans
+          </button>
+        </div>
+        <RepositoryUpload projectId={projectId} onUploadComplete={loadScans} />
+
+
+        <ScanList scans={scans} loading={scansLoading} />
         <FindingsPanel projectId={projectId} />
 
         <div className="grid gap-4 lg:grid-cols-[320px_1fr]">
@@ -119,31 +153,6 @@ export default function ProjectDetailPage() {
           <FileViewer file={selectedFile} loading={fileLoading} />
         </div>
         <ChatPanel projectId={projectId} />
-
-        <section className="grid gap-4 md:grid-cols-3">
-          <div className="rounded border p-4">
-            <h2 className="font-semibold">Files</h2>
-            <p className="text-sm text-gray-500">Coming soon on Day 8</p>
-          </div>
-
-          <div className="rounded border p-4">
-            <h2 className="font-semibold">Findings</h2>
-            <p className="text-sm text-gray-500">Coming soon on Day 13</p>
-          </div>
-
-          <div className="rounded border p-4">
-            <h2 className="font-semibold">Chat</h2>
-            <p className="text-sm text-gray-500">Coming soon on Day 15</p>
-          </div>
-        </section>
-
-        <section className="rounded border p-4">
-          <h2 className="text-xl font-semibold">Project Workspace</h2>
-          <p className="mt-2 text-gray-600">
-            This page will later contain repository upload, scan history, file
-            explorer, findings, and AI chat.
-          </p>
-        </section>
       </div>
     </main>
   );

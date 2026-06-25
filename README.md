@@ -351,6 +351,54 @@ DevLens is an AI-powered web application that helps developers understand and im
 
 ---
 
+## Day 16 Project Overview & Scan History
+
+* Project overview component created
+* Latest completed scan summary displayed
+* Repository health snapshot added
+* Overview metrics displayed:
+
+  * Total Files
+  * Supported Files
+  * Chunks
+  * Findings
+* Latest scan status badge implemented
+* Scan history component refactored to accept scan data as props
+* Project page now loads scan history from backend
+* Scan loading state implemented
+* Latest scan automatically derived from scan history
+* Refresh scans button added
+* Manual scan history refresh implemented
+* Repository upload component updated with upload completion callback
+* Upload automatically refreshes scan history after successful scan
+* Project overview automatically updates after new scans
+* Scan history displays:
+
+  * Scan ID
+  * Created time
+  * Started time
+  * Completed time
+  * Total files
+  * Supported files
+  * Chunk count
+  * Findings count
+  * Scan status
+* Frontend state management improved for project dashboard
+* Project workspace layout reorganized:
+
+  * Project Overview
+  * Upload Repository
+  * Scan History
+  * Findings
+  * Repository Tree
+  * File Viewer
+  * AI Repository Assistant
+* End-to-end testing completed for scan refresh workflow
+* Chat integration verified after project page refactor
+* Foundation prepared for richer project analytics and future dashboard enhancements
+
+---
+
 ## Run the project
 
 ```bash
