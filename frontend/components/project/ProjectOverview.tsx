@@ -1,6 +1,9 @@
 "use client";
 
 import type { ScanRun } from "@/types/scan";
+import Section from "@/components/ui/Section";
+import Card from "@/components/ui/Card";
+import EmptyState from "@/components/ui/EmptyState";
 
 type Props = {
   latestScan: ScanRun | null;
@@ -15,18 +18,17 @@ function statusClass(status?: string) {
 
 export default function ProjectOverview({ latestScan }: Props) {
   return (
-    <section className="rounded border p-4 space-y-4">
-      <div>
-        <h2 className="text-xl font-semibold">Project Overview</h2>
-        <p className="text-sm text-gray-500">
-          Latest scan summary and repository health snapshot.
-        </p>
-      </div>
+    <Section
+      title="Project Overview"
+      description="Latest scan summary and repository health snapshot."
+    >
+
 
       {!latestScan ? (
-        <p className="rounded bg-gray-50 p-3 text-sm text-gray-500">
-          No scans yet. Upload a repository zip to generate your first overview.
-        </p>
+        <EmptyState
+          title="No scans yet"
+          description="Upload a repository zip to generate your first overview."
+        />
       ) : (
         <>
           <div className="flex items-center gap-2">
@@ -41,25 +43,25 @@ export default function ProjectOverview({ latestScan }: Props) {
           </div>
 
           <div className="grid gap-3 md:grid-cols-4">
-            <div className="rounded bg-gray-50 p-3">
+            <Card className="bg-gray-50 p-3">
               <p className="text-sm text-gray-500">Total Files</p>
               <p className="text-2xl font-bold">{latestScan.total_files}</p>
-            </div>
+            </Card>
 
-            <div className="rounded bg-gray-50 p-3">
+            <Card className="bg-gray-50 p-3">
               <p className="text-sm text-gray-500">Supported Files</p>
               <p className="text-2xl font-bold">{latestScan.supported_files}</p>
-            </div>
+            </Card>
 
-            <div className="rounded bg-gray-50 p-3">
+            <Card className="bg-gray-50 p-3">
               <p className="text-sm text-gray-500">Chunks</p>
               <p className="text-2xl font-bold">{latestScan.chunk_count}</p>
-            </div>
+            </Card>
 
-            <div className="rounded bg-gray-50 p-3">
+            <Card className="bg-gray-50 p-3">
               <p className="text-sm text-gray-500">Findings</p>
               <p className="text-2xl font-bold">{latestScan.issue_count}</p>
-            </div>
+            </Card>
           </div>
 
           {latestScan.error_message && (
@@ -69,6 +71,6 @@ export default function ProjectOverview({ latestScan }: Props) {
           )}
         </>
       )}
-    </section>
+    </Section>
   );
 }

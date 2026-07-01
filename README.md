@@ -398,6 +398,12 @@ DevLens is an AI-powered web application that helps developers understand and im
 * Foundation prepared for richer project analytics and future dashboard enhancements
 
 ---
+## Day 17 Additional Improvements
+
+- Prevented automatic page scrolling to the AI Assistant when opening a project.
+- Chat now automatically scrolls only when the user sends or receives new messages.
+- Improved overall chat user experience by avoiding unwanted scrolling during chat history loading.
+---
 
 ## Run the project
 

@@ -15,6 +15,7 @@ const STARTER_PROMPTS = [
   "What should I refactor first?",
 ];
 
+
 export default function ChatPanel({ projectId }: Props) {
   const [messages, setMessages] = useState<LocalChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -23,6 +24,7 @@ export default function ChatPanel({ projectId }: Props) {
   const [error, setError] = useState("");
 
   const bottomRef = useRef<HTMLDivElement | null>(null);
+  const shouldScrollRef = useRef(false);
 
   useEffect(() => {
     async function loadHistory() {
@@ -50,8 +52,11 @@ export default function ChatPanel({ projectId }: Props) {
   }, [projectId]);
 
   useEffect(() => {
+    if (!shouldScrollRef.current) return;
+  
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, sending]);
+    shouldScrollRef.current = false;
+  }, [messages]);
 
   async function sendMessage(messageText?: string) {
     const message = (messageText || input).trim();
@@ -66,7 +71,8 @@ export default function ChatPanel({ projectId }: Props) {
       role: "user",
       message,
     };
-
+    
+    shouldScrollRef.current = true;
     setMessages((prev) => [...prev, userMessage]);
     setSending(true);
 

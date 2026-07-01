@@ -15,6 +15,9 @@ import FindingsPanel from "@/components/project/FindingsPanel";
 import ChatPanel from "@/components/project/ChatPanel";
 import ProjectOverview from "@/components/project/ProjectOverview";
 import type { ScanRun } from "@/types/scan";
+import Button from "@/components/ui/Button";
+import LoadingState from "@/components/ui/LoadingState";
+import EmptyState from "@/components/ui/EmptyState";
 
 export default function ProjectDetailPage() {
   const router = useRouter();
@@ -97,11 +100,22 @@ export default function ProjectDetailPage() {
   }
 
   if (loading) {
-    return <main className="p-6">Loading project...</main>;
+    return (
+      <main className="p-6">
+        <LoadingState label="Loading project..." />
+      </main>
+    );
   }
 
   if (!project) {
-    return <main className="p-6">Project not found.</main>;
+    return (
+      <main className="p-6">
+        <EmptyState
+          title="Project not found"
+          description="The requested project could not be loaded."
+        />
+      </main>
+    );
   }
 
   return (
@@ -120,25 +134,21 @@ export default function ProjectDetailPage() {
             </p>
           </div>
 
-          <button
-            onClick={handleLogout}
-            className="rounded bg-red-600 px-4 py-2 text-white"
-          >
+          <Button variant="danger" onClick={handleLogout}>
             Logout
-          </button>
+          </Button>
         </header>
         <ProjectOverview latestScan={latestScan} />
 
         <div className="flex justify-end">
-          <button
-            onClick={loadScans}
-            className="rounded border px-3 py-1 text-sm"
-          >
-            Refresh scans
-          </button>
+        <Button
+  variant="secondary"
+  onClick={loadScans}
+>
+  Refresh scans
+</Button>
         </div>
         <RepositoryUpload projectId={projectId} onUploadComplete={loadScans} />
-
 
         <ScanList scans={scans} loading={scansLoading} />
         <FindingsPanel projectId={projectId} />
