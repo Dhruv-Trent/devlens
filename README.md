@@ -403,6 +403,87 @@ DevLens is an AI-powered web application that helps developers understand and im
 - Prevented automatic page scrolling to the AI Assistant when opening a project.
 - Chat now automatically scrolls only when the user sends or receives new messages.
 - Improved overall chat user experience by avoiding unwanted scrolling during chat history loading.
+
+---
+
+## Day 18 Testing & Bug Fixing
+
+* Created a comprehensive `TESTING.md` checklist
+* Performed a fresh full application startup test
+
+### Authentication Testing
+
+* Verified user registration
+* Verified duplicate registration handling
+* Verified user login
+* Verified invalid login handling
+* Verified logout functionality
+* Verified protected route access
+
+### Project Management Testing
+
+* Verified project creation
+* Verified dashboard project listing
+* Verified project detail page
+* Verified project persistence after page refresh
+
+### Repository Upload & Scan Testing
+
+* Verified successful ZIP repository upload
+* Verified scan creation
+* Verified scan completion
+* Verified project overview updates after scan
+* Verified scan history updates correctly
+
+### Upload Validation Testing
+
+* Verified non-ZIP file rejection
+* Verified corrupt ZIP failure handling
+* Verified failed scan status updates
+* Verified appropriate error messages for invalid uploads
+
+### Repository Explorer Testing
+
+* Verified repository tree loading
+* Verified file selection
+* Verified file viewer updates
+* Verified content preview rendering
+
+### Findings System Testing
+
+* Verified findings generation
+* Verified severity badge rendering
+* Verified issue suggestions
+* Verified findings persistence after page refresh
+
+### AI Repository Assistant Testing
+
+* Verified chat history loading
+* Verified starter prompts
+* Verified message sending
+* Verified loading state
+* Verified assistant responses
+* Verified chat history persistence
+
+### Chat UX Improvements
+
+* Prevented automatic page scrolling during initial chat history load
+* Enabled automatic scrolling only when new messages are sent or received
+
+### Security & Authorization Testing
+
+* Verified users cannot access other users' projects
+* Verified protected API endpoints return appropriate authorization responses
+
+### Backend Verification
+
+* Verified backend health endpoint
+* Verified Swagger API documentation
+
+### Final Validation
+
+* Confirmed all major frontend workflows function correctly after application restart
+
 ---
 
 ## Run the project
